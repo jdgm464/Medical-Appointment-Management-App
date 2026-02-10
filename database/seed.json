@@ -1,0 +1,52 @@
+[
+  {
+    "patientName": "Ana Pérez",
+    "phone": "11-5555-1234",
+    "email": "ana.perez@example.com",
+    "date": "2026-02-06",
+    "time": "09:30",
+    "reason": "Consulta clínica",
+    "status": "scheduled",
+    "queueNumber": null
+  },
+  {
+    "patientName": "Juan Gómez",
+    "phone": "11-5555-5678",
+    "email": "juan.gomez@example.com",
+    "date": "2026-02-06",
+    "time": "10:00",
+    "reason": "Control pediátrico",
+    "status": "checked_in",
+    "queueNumber": 1
+  },
+  {
+    "patientName": "Lucía Fernández",
+    "phone": "11-5555-9012",
+    "email": "lucia.fernandez@example.com",
+    "date": "2026-02-06",
+    "time": "10:30",
+    "reason": "Dermatología",
+    "status": "in_service",
+    "queueNumber": 2
+  },
+  {
+    "patientName": "Marcos Díaz",
+    "phone": "11-5555-3456",
+    "email": "marcos.diaz@example.com",
+    "date": "2026-02-06",
+    "time": "11:00",
+    "reason": "Odontología",
+    "status": "completed",
+    "queueNumber": null
+  },
+  {
+    "patientName": "Sofía Núñez",
+    "phone": "11-5555-7890",
+    "email": "sofia.nunez@example.com",
+    "date": "2026-02-06",
+    "time": "11:30",
+    "reason": "Cardiología",
+    "status": "no_show",
+    "queueNumber": null
+  }
+]
