@@ -22,12 +22,17 @@ export interface Appointment {
 const API_BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3001";
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
-  const response = await fetch(`${API_BASE_URL}${path}`, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-    ...options,
-  });
+  let response: Response;
+  try {
+    response = await fetch(`${API_BASE_URL}${path}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      ...options,
+    });
+  } catch (err) {
+    throw new Error("No se pudo conectar con el servidor. Comprueba que el backend esté en ejecución.");
+  }
 
   if (!response.ok) {
     const errorText = await response.text();
@@ -71,9 +76,13 @@ export async function getAppointmentById(id: string): Promise<Appointment | null
 }
 
 export async function getTodayAppointments(): Promise<Appointment[]> {
-  const today = new Date().toISOString().split("T")[0];
-  const appointments = await request<Appointment[]>(`/appointments?date=${today}`);
-  return appointments.sort((a, b) => a.time.localeCompare(b.time));
+  try {
+    const today = new Date().toISOString().split("T")[0];
+    const appointments = await request<Appointment[]>(`/appointments?date=${today}`);
+    return appointments.sort((a, b) => a.time.localeCompare(b.time));
+  } catch {
+    return [];
+  }
 }
 
 export async function addToQueue(
@@ -93,10 +102,14 @@ export async function addToQueue(
 }
 
 export async function getQueue(): Promise<Appointment[]> {
-  const appointments = await getTodayAppointments();
-  return appointments
-    .filter((appointment) => appointment.status === "checked_in")
-    .sort((a, b) => (a.queueNumber || 0) - (b.queueNumber || 0));
+  try {
+    const appointments = await getTodayAppointments();
+    return appointments
+      .filter((appointment) => appointment.status === "checked_in")
+      .sort((a, b) => (a.queueNumber || 0) - (b.queueNumber || 0));
+  } catch {
+    return [];
+  }
 }
 
 export async function deleteAppointment(id: string): Promise<void> {
